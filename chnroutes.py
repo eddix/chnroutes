@@ -14,6 +14,9 @@ def generate_ovpn(metric):
     for ip,mask,_ in results:
         route_item="route %s %s net_gateway %d\n"%(ip,mask,metric)
         rfile.write(route_item)
+    rfile.write("route 192.168.1.0 24 net_gateway %d"%(metric))
+    rfile.write("route 192.168.100.0 24 net_gateway %d"%(metric))
+    rfile.write("route 192.168.200.0 24 net_gateway %d"%(metric))
     rfile.close()
     print "Usage: Append the content of the newly created routes.txt to your openvpn config file," \
           " and also add 'max-routes %d', which takes a line, to the head of the file." % (len(results)+20)
